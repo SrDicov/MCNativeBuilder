@@ -1,0 +1,20 @@
+[
+  {
+    "name": "java.io.File",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.MinecraftProfileTexture",
+    "allDeclaredFields": true,
+    "unsafeAllocated": true,
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ]
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.MinecraftProfileTexture$Type",
+    "allDeclaredFields": true
+  }
+]

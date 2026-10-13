@@ -8,5 +8,4 @@ import java.util.List;
 public interface IProcessor {
     List<File> processClasspath(JudgeLibInstall install);
     List<String> preBuild(JudgeLibInstall install, List<File> classpath, boolean appLayer);
-    void postBuild(JudgeLibInstall install, boolean appLayer);
 }

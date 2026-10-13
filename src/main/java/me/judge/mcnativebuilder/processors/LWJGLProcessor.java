@@ -8,7 +8,6 @@ import org.angelauramc.judgelib.util.SemVer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -34,7 +33,8 @@ public class LWJGLProcessor implements IProcessor {
                 }
             }
         } catch (IOException e) {
-            Main.LOGGER.severe("LWJGL Processing failed! " + e.getMessage());
+            // Fail loudly: a half-patched classpath produces a native image that crashes at runtime.
+            throw new IllegalStateException("LWJGL download failed: " + e.getMessage(), e);
         }
 
         return List.of();
@@ -47,11 +47,6 @@ public class LWJGLProcessor implements IProcessor {
             return List.of("--features=me.judge.lwjgl.LWJGL34Feature");
 
         return List.of();
-    }
-
-    @Override
-    public void postBuild(JudgeLibInstall settings, boolean appLayer) {
-        // noop
     }
 
     private String createLWJGL(String fileName) {

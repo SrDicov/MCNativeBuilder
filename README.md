@@ -20,9 +20,15 @@ I can only work on these projects if I can be stable financially. If you want to
 
 ### Run the Downloaded Build:
 * Open Command Prompt or Terminal.
-* Type the command: ``java -jar path-to-downloaded-jar --version <version> --graalvm <path-to-graal>``.
-* Example: ``java -jar C:/Downloads/MCNativeBuilder/MCNativeBuilder.jar --version 1.20.4 --graalvm C:/Downloads/GraalVM``.
+* Type the command: ``java -jar path-to-downloaded-jar --mc-version <version> --graalvm <path-to-graal>``.
+* Example: ``java -jar C:/Downloads/MCNativeBuilder/MCNativeBuilder.jar --mc-version 1.20.4 --graalvm C:/Downloads/GraalVM``.
 * Follow the instructions in the console/terminal to compile the native image.
+
+### Options:
+* Run the jar with ``--help`` for the full list. Flags are store-true: ``--dry-run``, not ``--dry-run true``.
+* ``--graalvm`` may come from ``GRAALVM_HOME`` instead; ``--workdir`` from ``MCNATIVE_WORKDIR``.
+* ``--march compatibility`` (default, portable) or ``--march native`` (fastest, only runs on this CPU).
+* Exit codes: ``0`` success, ``1`` build or runtime failure, ``2`` bad usage.
 
 ## How do you run the game?
 ### Locate the Executable:

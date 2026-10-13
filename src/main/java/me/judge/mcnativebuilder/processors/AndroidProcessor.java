@@ -2,12 +2,13 @@ package me.judge.mcnativebuilder.processors;
 
 import me.judge.mcnativebuilder.Main;
 import org.angelauramc.judgelib.installer.JudgeLibInstall;
-import org.angelauramc.judgelib.util.ConnectionUtil;
 
-import java.io.*;
-import java.net.URI;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -17,11 +18,7 @@ public class AndroidProcessor implements IProcessor {
         File file = new File(Main.buildDir, "lwjgl-glfw-classes.jar");
         try (InputStream stream = Main.class.getClassLoader().getResourceAsStream("extraLibs/lwjgl-glfw-classes.jar")) {
             if (stream != null) {
-                FileOutputStream fos = new FileOutputStream(file);
-                byte[] buffer = stream.readAllBytes();
-                fos.write(buffer);
-                fos.flush();
-                fos.close();
+                Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -49,7 +46,7 @@ public class AndroidProcessor implements IProcessor {
 
         File capCacheFolder = new File(Main.buildDir, "caps");
         if(!capCacheFolder.exists()) {
-            Main.runCompileBlocking(classpath, "capCache",
+            if (Main.runCompileBlocking(classpath, "capCache",
                     List.of("-H:CAPCacheDir=" + capCacheFolder,
                             "-H:-UseContainerSupport",
                             "-H:-UseCAPCache",
@@ -61,8 +58,9 @@ public class AndroidProcessor implements IProcessor {
                             "--native-compiler-options=-Wl,--gc-sections",
                             "--native-compiler-path=" + System.getenv("ANDROID_NDK") + "/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android26-clang",
                             Main.mainClass
-                    )
-            );
+                    )) != 0) {
+                throw new IllegalStateException("capCache build failed");
+            }
         }
 
         return List.of(
@@ -75,10 +73,5 @@ public class AndroidProcessor implements IProcessor {
                 "-H:CAPCacheDir=" + capCacheFolder,
                 "--native-compiler-path=" + System.getenv("ANDROID_NDK") + "/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android26-clang"
         );
-    }
-
-    @Override
-    public void postBuild(JudgeLibInstall install, boolean appLayer) {
-
     }
 }

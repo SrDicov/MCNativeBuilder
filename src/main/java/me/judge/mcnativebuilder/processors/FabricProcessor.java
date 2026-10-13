@@ -4,9 +4,11 @@ import me.judge.mcnativebuilder.Main;
 import org.angelauramc.judgelib.installer.JudgeLibInstall;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +19,7 @@ public class FabricProcessor implements IProcessor{
             if (file.contains("sponge-mixin")) {
                 try (InputStream stream = Main.class.getClassLoader().getResourceAsStream("extraLibs/sponge-mixin-0.17.3.jar")) {
                     if (stream != null) {
-                        FileOutputStream fos = new FileOutputStream(file);
-                        byte[] buffer = stream.readAllBytes();
-                        fos.write(buffer);
-                        fos.flush();
-                        fos.close();
+                        Files.copy(stream, Path.of(file), StandardCopyOption.REPLACE_EXISTING);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -47,10 +45,5 @@ public class FabricProcessor implements IProcessor{
         list.add("-H:-ReduceImplicitExceptionStackTraceInformation");
         list.add("-J-Dfabric.server=false");
         return list;
-    }
-
-    @Override
-    public void postBuild(JudgeLibInstall settings, boolean appLayer) {
-
     }
 }
