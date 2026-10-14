@@ -4,6 +4,7 @@ import me.judge.mcnativebuilder.processors.AndroidProcessor;
 import me.judge.mcnativebuilder.processors.FabricProcessor;
 import me.judge.mcnativebuilder.processors.IProcessor;
 import me.judge.mcnativebuilder.processors.LWJGLProcessor;
+import com.google.gson.Gson;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -25,8 +26,11 @@ import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -110,7 +114,7 @@ public class Main {
                 .help("Makes the output a shared library");
         parser.addArgument("--extra-build-args")
                 .action(Arguments.append())
-                .help("Extra native-image arg; repeat the flag for each one (keeps spaces intact)");
+                .help("Extra native-image arg; repeat as --extra-build-args=<arg> (the = form is required: values starting with - are flags otherwise)");
         parser.addArgument("--experimental-lwjgl")
                 .action(Arguments.storeTrue())
                 .setDefault(false)
@@ -271,6 +275,11 @@ public class Main {
                 LOGGER.info("Tracing done, building the native image from the collected config");
             }
 
+            // The tool jar is not on the game classpath, so native-image never sees its
+            // META-INF configs. Materialize the shipped defaults into the config dir,
+            // merging with whatever the tracing agent collected.
+            mergeDefaultReflectConfig();
+
             if(experimentalLWJGLPatch) {
                 LOGGER.info("Injecting LWJGLPatch-9.8 into Classpath");
                 // ponytail: CME-safe removeIf; ponytail ceiling: single pass, no logging of removed entries
@@ -382,6 +391,37 @@ public class Main {
         }
     }
 
+    private static void mergeDefaultReflectConfig() {
+        try (InputStream in = Main.class.getClassLoader().getResourceAsStream("META-INF/native-image/me.judge/mcnativebuilder/reflect-config.json")) {
+            if (in == null) {
+                return;
+            }
+            Gson gson = new Gson();
+            List<Map<String, Object>> merged = new ArrayList<>(
+                    gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), List.class));
+            File out = new File(buildDir, "reflect-config.json");
+            if (out.exists()) {
+                List<Map<String, Object>> traced =
+                        gson.fromJson(new FileReader(out, StandardCharsets.UTF_8), List.class);
+                Set<String> names = new HashSet<>();
+                for (Map<String, Object> e : merged) {
+                    names.add((String) e.get("name"));
+                }
+                for (Map<String, Object> e : traced) {
+                    if (names.add((String) e.get("name"))) {
+                        merged.add(e);
+                    }
+                }
+            }
+            try (Writer w = new FileWriter(out, StandardCharsets.UTF_8)) {
+                gson.toJson(merged, w);
+            }
+            LOGGER.info("Reflection config: " + merged.size() + " entries");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static void addAll(List<String> args, List<IProcessor> processors, JudgeLibInstall install, List<File> libs, boolean appLayer) {
         for (IProcessor processor : processors) {
             List<String> temp = processor.preBuild(install, libs, appLayer);
@@ -422,7 +462,8 @@ public class Main {
                 "-H:+AddAllCharsets", "-H:+IncludeAllLocales", "-H:IncludeResources=resourcepacks/.*", "-H:IncludeResources=.*.so",
                 "-H:IncludeResources=.*.dylib", "-H:IncludeResources=.*.dll", "-H:IncludeResources=.*.jnilib",
                 "-H:IncludeResources=data/.*", "-H:IncludeResources=assets/.*",
-                "--initialize-at-run-time=io.netty,org.slf4j,sun.net.dns.ResolverConfigurationImpl")) {
+                "--initialize-at-run-time=io.netty,org.slf4j,sun.net.dns.ResolverConfigurationImpl",
+                "-H:+SharedArenaSupport")) {
             writer.write(" ");
             writer.write(quoted(arg));
         }

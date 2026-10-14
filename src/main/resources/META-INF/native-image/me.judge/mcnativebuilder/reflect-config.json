@@ -10,11 +10,189 @@
     "allDeclaredFields": true,
     "unsafeAllocated": true,
     "methods": [
-      { "name": "<init>", "parameterTypes": [] }
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
     ]
   },
   {
     "name": "com.mojang.authlib.minecraft.MinecraftProfileTexture$Type",
     "allDeclaredFields": true
+  },
+  {
+    "name": "com.mojang.authlib.Environment",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.GameProfile",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.BanDetails",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.MinecraftProfileTextures",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.report.AbuseReport",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.report.AbuseReportLimits",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.report.ReportChatMessage",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.report.ReportEvidence",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.report.ReportedEntity",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.minecraft.UserApiService$UserProperties",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.properties.Property",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.ProfileResult",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.AbuseReportRequest",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.AbuseReportRequest$ClientInfo",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.AbuseReportRequest$RealmInfo",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.AbuseReportRequest$ThirdPartyServerInfo",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.JoinMinecraftServerRequest",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.TelemetryEventsRequest",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.request.TelemetryEventsRequest$Event",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.BlockListResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.ErrorResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.HasJoinedMinecraftServerResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.KeyPairResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.KeyPairResponse$KeyPair",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.MinecraftProfilePropertiesResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.MinecraftTexturesPayload",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.NameAndId",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.ProfileAction",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.ProfileSearchResultsResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse$BanStatus",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse$BanStatus$BannedScope",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse$Privileges",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse$Privileges$Privilege",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.mojang.authlib.yggdrasil.response.UserAttributesResponse$ProfanityFilterPreferences",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
   }
 ]

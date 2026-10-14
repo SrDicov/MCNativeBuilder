@@ -51,3 +51,6 @@ bin/
 /assets/
 /accounts/
 auth.json
+# Built artifacts (too big for git; rebuild with ./gradlew build)
+/MCNativeBuilder.jar
+/1.21.11
